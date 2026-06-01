@@ -1,0 +1,5 @@
+venv/
+data/mvtec/
+data/ballscrew/
+results/models/
+__pycache__/
