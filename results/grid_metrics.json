@@ -1,0 +1,116 @@
+{
+  "HOG+SVM": {
+    "model": "HOG+SVM",
+    "auroc": 0.6140350877192983,
+    "average_precision": 0.7948804297683632,
+    "f1_score": 0.6521739130434783,
+    "threshold": -0.03370283780464467,
+    "precision": 0.8571428571428571,
+    "recall": 0.5263157894736842,
+    "confusion_matrix": [
+      [
+        16,
+        5
+      ],
+      [
+        27,
+        30
+      ]
+    ]
+  },
+  "PatchCore": {
+    "model": "PatchCore",
+    "auroc": 0.7000835421888053,
+    "average_precision": 0.8680375682102632,
+    "f1_score": 0.831858407079646,
+    "threshold": 45413.9375,
+    "precision": 0.8392857142857143,
+    "recall": 0.8245614035087719,
+    "confusion_matrix": [
+      [
+        12,
+        9
+      ],
+      [
+        10,
+        47
+      ]
+    ]
+  },
+  "failure_analysis": {
+    "HOG+SVM": {
+      "model": "HOG+SVM",
+      "false_positives": {
+        "count": 5,
+        "paths": [
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/006.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/011.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/012.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/018.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/019.png"
+        ],
+        "scores": [
+          0.07729421538516013,
+          0.09363562178469698,
+          0.01694718658438399,
+          0.30363358188209055,
+          0.01677380052647326
+        ]
+      },
+      "false_negatives": {
+        "count": 27,
+        "paths": [
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/001.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/002.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/005.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/007.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/009.png"
+        ],
+        "scores": [
+          -0.0797249374253357,
+          -0.1200868858828037,
+          -0.08397861612588509,
+          -0.1948328471699341,
+          -0.12349459992007006
+        ]
+      }
+    },
+    "PatchCore": {
+      "model": "PatchCore",
+      "false_positives": {
+        "count": 9,
+        "paths": [
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/003.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/004.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/005.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/006.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/010.png"
+        ],
+        "scores": [
+          46788.453125,
+          49718.7890625,
+          48773.08203125,
+          48309.49609375,
+          47310.8515625
+        ]
+      },
+      "false_negatives": {
+        "count": 10,
+        "paths": [
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/004.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/008.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/010.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/broken/006.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/broken/007.png"
+        ],
+        "scores": [
+          44360.0859375,
+          40367.609375,
+          44689.1875,
+          44654.9609375,
+          44255.2265625
+        ]
+      }
+    }
+  }
+}
