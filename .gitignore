@@ -3,3 +3,4 @@ data/mvtec/
 data/ballscrew/
 results/models/
 __pycache__/
+.DS_Store
