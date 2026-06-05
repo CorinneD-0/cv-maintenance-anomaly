@@ -20,20 +20,20 @@
   },
   "PatchCore": {
     "model": "PatchCore",
-    "auroc": 0.7151055544168887,
-    "average_precision": 0.8835719987933572,
-    "f1_score": 0.7605633802816901,
-    "threshold": 38174.7265625,
-    "precision": 0.8617021276595744,
-    "recall": 0.680672268907563,
+    "auroc": 0.8827628612420578,
+    "average_precision": 0.9352275823757101,
+    "f1_score": 0.8078817733990148,
+    "threshold": 24604.0546875,
+    "precision": 0.9761904761904762,
+    "recall": 0.6890756302521008,
     "confusion_matrix": [
       [
-        28,
-        13
+        39,
+        2
       ],
       [
-        38,
-        81
+        37,
+        82
       ]
     ]
   },
@@ -78,37 +78,31 @@
     "PatchCore": {
       "model": "PatchCore",
       "false_positives": {
-        "count": 13,
+        "count": 2,
         "paths": [
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/good/002.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/good/004.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/good/005.png",
           "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/good/014.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/good/015.png"
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/good/025.png"
         ],
         "scores": [
-          38391.140625,
-          39623.921875,
-          40025.5625,
-          41380.515625,
-          40329.46875
+          31357.625,
+          32748.18359375
         ]
       },
       "false_negatives": {
-        "count": 38,
+        "count": 37,
         "paths": [
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/002.png",
           "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/003.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/004.png",
           "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/005.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/006.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/013.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/018.png"
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/screw/test/manipulated_front/008.png"
         ],
         "scores": [
-          36081.53125,
-          37223.640625,
-          36847.21875,
-          37040.52734375,
-          37224.33203125
+          20697.015625,
+          21863.6328125,
+          21430.26953125,
+          22737.8828125,
+          24448.6484375
         ]
       }
     }

@@ -108,11 +108,7 @@ class PatchCoreDetector:
         return np.concatenate(all_features, axis=0), map_size
 
     def _coreset_subsampling(self, features: np.ndarray) -> np.ndarray:
-        """Random pre-filtering + greedy coreset su subset gestibile."""
-        max_pre = 10000
-        if len(features) > max_pre:
-            idx = np.random.choice(len(features), max_pre, replace=False)
-            features = features[idx]
+        """Greedy coreset su tutto il feature set — nessun pre-subsampling."""
         n_select = max(1, int(len(features) * self.coreset_ratio))
         print(f"Coreset: {len(features)} → {n_select} feature selezionate")
         indices = [np.random.randint(0, len(features))]

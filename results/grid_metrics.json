@@ -20,20 +20,20 @@
   },
   "PatchCore": {
     "model": "PatchCore",
-    "auroc": 0.7000835421888053,
-    "average_precision": 0.8680375682102632,
-    "f1_score": 0.831858407079646,
-    "threshold": 45413.9375,
-    "precision": 0.8392857142857143,
-    "recall": 0.8245614035087719,
+    "auroc": 0.7568922305764411,
+    "average_precision": 0.9089384801159808,
+    "f1_score": 0.6966292134831461,
+    "threshold": 34296.3984375,
+    "precision": 0.96875,
+    "recall": 0.543859649122807,
     "confusion_matrix": [
       [
-        12,
-        9
+        20,
+        1
       ],
       [
-        10,
-        47
+        26,
+        31
       ]
     ]
   },
@@ -78,37 +78,29 @@
     "PatchCore": {
       "model": "PatchCore",
       "false_positives": {
-        "count": 9,
+        "count": 1,
         "paths": [
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/003.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/004.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/005.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/006.png",
           "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/good/010.png"
         ],
         "scores": [
-          46788.453125,
-          49718.7890625,
-          48773.08203125,
-          48309.49609375,
-          47310.8515625
+          35828.7265625
         ]
       },
       "false_negatives": {
-        "count": 10,
+        "count": 26,
         "paths": [
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/002.png",
           "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/004.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/008.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/010.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/broken/006.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/broken/007.png"
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/005.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/007.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/grid/test/bent/008.png"
         ],
         "scores": [
-          44360.0859375,
-          40367.609375,
-          44689.1875,
-          44654.9609375,
-          44255.2265625
+          32004.0078125,
+          28419.1328125,
+          29477.0234375,
+          28149.34375,
+          27226.3671875
         ]
       }
     }

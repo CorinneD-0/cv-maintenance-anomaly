@@ -20,20 +20,20 @@
   },
   "PatchCore": {
     "model": "PatchCore",
-    "auroc": 0.658357771260997,
-    "average_precision": 0.9034005693903422,
-    "f1_score": 0.47540983606557374,
-    "threshold": 46058.1875,
+    "auroc": 0.9589442815249267,
+    "average_precision": 0.9907433353196876,
+    "f1_score": 0.9058823529411765,
+    "threshold": 31004.0703125,
     "precision": 1.0,
-    "recall": 0.3118279569892473,
+    "recall": 0.8279569892473119,
     "confusion_matrix": [
       [
         22,
         0
       ],
       [
-        64,
-        29
+        16,
+        77
       ]
     ]
   },
@@ -79,20 +79,20 @@
         "scores": []
       },
       "false_negatives": {
-        "count": 64,
+        "count": 16,
         "paths": [
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/bent/000.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/bent/003.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/bent/007.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/bent/008.png",
-          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/bent/010.png"
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/bent/022.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/color/000.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/color/004.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/color/005.png",
+          "/Users/corinnedaquino/Downloads/Progetto/data/mvtec/metal_nut/test/color/018.png"
         ],
         "scores": [
-          44663.51953125,
-          45309.9921875,
-          41094.8828125,
-          40011.375,
-          41313.48046875
+          30226.2578125,
+          30327.951171875,
+          27351.1328125,
+          28173.2890625,
+          29383.07421875
         ]
       }
     }
