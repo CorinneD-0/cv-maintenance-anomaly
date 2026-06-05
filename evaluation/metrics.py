@@ -1,6 +1,8 @@
 """
-Modulo di valutazione: metriche, grafici e failure analysis.
-Confronta HOG+SVM vs PatchCore su test set.
+── EVALUATION & METRICS ─────────────────────────────────────────────
+Qui calcolo tutte le metriche richieste dall'esame e genero i grafici.
+Confronto HOG+SVM vs PatchCore sullo stesso test set.
+────────────────────────────────────────────────────────────────────
 """
 
 from pathlib import Path
@@ -17,24 +19,33 @@ from sklearn.metrics import (
 )
 import json
 
-
 RESULTS_DIR = Path(__file__).parent.parent / "results"
 
 
+# ── CALCOLO METRICHE ─────────────────────────────────────────────────────────
+# AUROC → misura quanto bene il modello separa normali da anomalie (indipendente dalla soglia)
+# AVERAGE PRECISION → area sotto la curva Precision-Recall
+# F1-SCORE → media armonica di precision e recall
+# CONFUSION MATRIX → quanti TP, TN, FP, FN — fondamentale per la failure analysis
+# la soglia ottimale viene trovata automaticamente dal punto della ROC curve con massimo (TPR - FPR)
 def compute_metrics(
     y_true: np.ndarray,
     y_scores: np.ndarray,
     threshold: float = None,
     model_name: str = "model",
 ) -> dict:
-    """Calcola tutte le metriche richieste dall'esame."""
+    # ── AUROC ────────────────────────────────────────────────────────────────
     auroc = roc_auc_score(y_true, y_scores)
+    # ── AVERAGE PRECISION ────────────────────────────────────────────────────
     ap = average_precision_score(y_true, y_scores)
+    # ── SOGLIA OTTIMALE ──────────────────────────────────────────────────────
+    # se non passo una soglia manuale, la calcolo dalla ROC curve
     if threshold is None:
         fpr, tpr, thresholds = roc_curve(y_true, y_scores)
         optimal_idx = np.argmax(tpr - fpr)
         threshold = float(thresholds[optimal_idx])
     y_pred = (y_scores >= threshold).astype(int)
+    # ── F1, PRECISION, RECALL ────────────────────────────────────────────────
     cm = confusion_matrix(y_true, y_pred)
     f1 = f1_score(y_true, y_pred, zero_division=0)
     report = classification_report(y_true, y_pred, output_dict=True, zero_division=0)
@@ -57,12 +68,15 @@ def compute_metrics(
     return metrics
 
 
+# ── ROC CURVE ────────────────────────────────────────────────────────────────
+# grafico che mostra il trade-off tra True Positive Rate e False Positive Rate
+# al variare della soglia — più la curva è in alto a sinistra, meglio è
+# plotto entrambi i modelli insieme per il confronto diretto HOG vs PatchCore
 def plot_roc_curves(
     results: dict,
     y_true: np.ndarray,
     save_path: Path = None,
 ) -> None:
-    """Plotta curve ROC per confronto modelli."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
     colors = {"HOG+SVM": "#7F77DD", "PatchCore": "#D85A30"}
 
@@ -79,6 +93,8 @@ def plot_roc_curves(
     axes[0].legend()
     axes[0].grid(True, alpha=0.3)
 
+    # ── PRECISION-RECALL CURVE ───────────────────────────────────────────────
+    # più informativa della ROC quando le classi sono sbilanciate
     for model_name, (y_scores, _) in results.items():
         prec, rec, _ = precision_recall_curve(y_true, y_scores)
         ap = average_precision_score(y_true, y_scores)
@@ -99,11 +115,15 @@ def plot_roc_curves(
     print(f"Curve ROC salvate in {save_path}")
 
 
+# ── CONFUSION MATRIX ─────────────────────────────────────────────────────────
+# tabella 2x2: righe = realtà, colonne = predizione
+# TN | FP
+# FN | TP
+# in contesto industriale FN (difetto non rilevato) è più grave di FP (falso allarme)
 def plot_confusion_matrix(
     metrics: dict,
     save_path: Path = None,
 ) -> None:
-    """Plotta confusion matrix side-by-side per i modelli."""
     models = [m for m in metrics if "confusion_matrix" in metrics[m]]
     fig, axes = plt.subplots(1, len(models), figsize=(6 * len(models), 5))
     if len(models) == 1:
@@ -128,6 +148,10 @@ def plot_confusion_matrix(
     print(f"Confusion matrix salvata in {save_path}")
 
 
+# ── HEATMAP ANOMALIA ─────────────────────────────────────────────────────────
+# visualizza dove PatchCore ha trovato l'anomalia nell'immagine
+# verde = zona normale, rosso = zona anomala
+# serve per la LOCALIZZAZIONE — il tecnico sa dove guardare fisicamente
 def plot_heatmap(
     original_img: np.ndarray,
     heatmap: np.ndarray,
@@ -136,7 +160,6 @@ def plot_heatmap(
     img_path: str = "",
     save_path: Path = None,
 ) -> None:
-    """Visualizza immagine originale + heatmap anomalia."""
     import cv2
     fig, axes = plt.subplots(1, 3, figsize=(12, 4))
     axes[0].imshow(original_img)
@@ -148,12 +171,13 @@ def plot_heatmap(
     axes[1].set_title(f"Anomaly heatmap\nscore={score:.3f}")
     axes[1].axis("off")
 
+    # overlay semitrasparente — originale + heatmap sovrapposta
     hm_resized = cv2.resize(hm_norm, (original_img.shape[1], original_img.shape[0]))
     hm_colored = plt.cm.RdYlGn_r(hm_resized)[:, :, :3]
     overlay = 0.6 * original_img / 255.0 + 0.4 * hm_colored
     overlay = np.clip(overlay, 0, 1)
     axes[2].imshow(overlay)
-    label_str = "🔴 ANOMALIA" if label else "✅ NORMALE"
+    label_str = "ANOMALIA" if label else "NORMALE"
     axes[2].set_title(f"Overlay — {label_str}")
     axes[2].axis("off")
 
@@ -165,6 +189,10 @@ def plot_heatmap(
         plt.close()
 
 
+# ── FAILURE ANALYSIS ─────────────────────────────────────────────────────────
+# trova i casi dove il modello sbaglia — richiesta obbligatoria dall'esame
+# FALSE POSITIVES: il modello dice anomalia ma era normale (falso allarme)
+# FALSE NEGATIVES: il modello dice normale ma era difettoso (difetto mancato) — il peggiore
 def failure_analysis(
     y_true: np.ndarray,
     y_scores: np.ndarray,
@@ -173,10 +201,9 @@ def failure_analysis(
     model_name: str = "model",
     n_samples: int = 5,
 ) -> dict:
-    """Identifica false positives e false negatives per failure analysis."""
     y_pred = (y_scores >= threshold).astype(int)
-    fp_mask = (y_pred == 1) & (y_true == 0)
-    fn_mask = (y_pred == 0) & (y_true == 1)
+    fp_mask = (y_pred == 1) & (y_true == 0)  # detto anomalia, era normale
+    fn_mask = (y_pred == 0) & (y_true == 1)  # detto normale, era difettoso
     analysis = {
         "model": model_name,
         "false_positives": {
@@ -196,6 +223,8 @@ def failure_analysis(
     return analysis
 
 
+# ── SALVATAGGIO METRICHE ──────────────────────────────────────────────────────
+# salvo tutto in JSON così posso leggerlo dopo senza rieseguire tutto
 def save_results(metrics: dict, save_path: Path = None) -> None:
     save_path = save_path or RESULTS_DIR / "metrics.json"
     save_path.parent.mkdir(parents=True, exist_ok=True)
