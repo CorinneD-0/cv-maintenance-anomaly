@@ -94,11 +94,58 @@ def analyze_component(image: Image.Image, category: str) -> tuple:
     return result_text, Image.fromarray(heatmap_img), label, score_normalized
 
 
+# Colori Sidel: navy #002B5C, arancio #F47920, grigio chiaro #F4F6F9
+SIDEL_CSS = """
+/* ── Sfondo generale ── */
+body, .gradio-container {
+    background: #F4F6F9 !important;
+    font-family: 'Inter', 'Helvetica Neue', sans-serif !important;
+}
+.gradio-container h1 {
+    color: #002B5C !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+}
+.gradio-container p { color: #4A5568 !important; }
+button.primary {
+    background: #F47920 !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+}
+button.primary:hover { background: #D4661A !important; }
+.block, .panel, .form {
+    background: white !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 4px rgba(0,43,92,0.06) !important;
+}
+label span, .label-wrap span {
+    color: #002B5C !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+}
+.wrap-inner { border-color: #CBD5E0 !important; border-radius: 8px !important; }
+input[type=range]::-webkit-slider-thumb { background: #F47920 !important; }
+hr { border-color: #E2E8F0 !important; }
+.gradio-container p em { font-size: 0.72rem !important; color: #94A3B8 !important; }
+textarea, input[type=text] {
+    border-color: #E2E8F0 !important;
+    border-radius: 8px !important;
+    background: #FAFBFC !important;
+}
+"""
+
+
 def build_app() -> gr.Blocks:
-    with gr.Blocks(title="Sidel Maintenance Vision Assistant", theme=gr.themes.Soft()) as app:
+    with gr.Blocks(
+        title="Sidel Maintenance Vision Assistant",
+        css=SIDEL_CSS,
+    ) as app:
         gr.Markdown("""
-# 🔧 Industrial Maintenance Vision Assistant
-**Anomaly Detection per componenti di macchinari industriali**
+# 🔧 Sidel Maintenance Vision Assistant
+**Anomaly Detection per componenti di macchinari industriali**  
 Carica la foto di un componente meccanico per ottenere una valutazione automatica.
         """)
 
@@ -128,8 +175,7 @@ Carica la foto di un componente meccanico per ottenere una valutazione automatic
 
         gr.Markdown("""
 ---
-*Progetto: Industrial Anomaly Detection — Epicode Computer Vision Final Exam*
-*Stack: PatchCore + EfficientNet-B0 + HOG+SVM + Gemma4:e4b (locale)*
+*Progetto: Industrial Anomaly Detection — Epicode Computer Vision Final Exam · PatchCore + EfficientNet-B0 + HOG+SVM + Gemma4:e4b (locale)*
         """)
 
     return app
